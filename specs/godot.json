@@ -1,0 +1,31 @@
+{
+    "name": "Godot",
+    "rules": [
+        {
+            "name": "Size",
+            "type": "size",
+            "width": 2560,
+            "height": 1356
+        },
+        {
+            "name": "Window normal",
+            "type": "or",
+            "rules": [
+                {
+                    "name": "Window normal",
+                    "type": "pixel_colour",
+                    "x": 3,
+                    "y": 1353,
+                    "colour": "#1f2531"
+                },
+                {
+                    "name": "Window occluded",
+                    "type": "pixel_colour",
+                    "x": 3,
+                    "y": 1353,
+                    "colour": "#0c0f14"
+                }
+            ]
+        }
+    ]
+}
