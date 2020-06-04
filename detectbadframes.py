@@ -19,7 +19,7 @@ def _parse_arguments():
     parser.add_argument("--delete", action="store_true", dest="delete_immediately", help="delete detected frames immediately instead of moving them to a rejection directory")
     parser.add_argument("-d", "--debug", action="store_true", dest="debug", help="print debugging information")
     parser.add_argument("--test", action="store_true", dest="test", help="check the rules but do not move or delete the frames")
-    
+
     args = parser.parse_args()
     return args
 
@@ -108,7 +108,7 @@ def _process_source(source, destination, delete_immediately, specifications):
     return processed, rejected
 
 
-if __name__ == "__main__":
+def _main():
     args = _parse_arguments()
     _debug = args.debug
     _test = args.test
@@ -152,7 +152,7 @@ if __name__ == "__main__":
                 print(spec)
 
         processed, rejected = _process_source(args.source, args.destination, args.delete_immediately, parsed_specifications)
-        
+
         print("%d frame(s) rejected of %d processed" % (len(rejected), processed))
         if _test:
             for r in rejected:
@@ -161,3 +161,7 @@ if __name__ == "__main__":
         # TODO: Maybe track some statistics and print them on exit.
         print()
         sys.exit(0)
+
+
+if __name__ == "__main__":
+    _main()
