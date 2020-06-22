@@ -110,6 +110,7 @@ def _process_source(source, destination, delete_immediately, specifications):
 
 def _main():
     args = _parse_arguments()
+    global _debug, _test
     _debug = args.debug
     _test = args.test
     parsed_specifications = []
