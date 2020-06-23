@@ -76,6 +76,13 @@
             "x": 273,
             "y": 2,
             "colour": "#ebe9ed"
+        },
+        {
+            "name": "Program switcher",
+            "type": "pixel_not_colour",
+            "x": 1294,
+            "y": 612,
+            "colour": "#ffffff"
         }
     ]
 }
