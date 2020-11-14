@@ -4,85 +4,78 @@
         {
             "name": "Size",
             "type": "size",
-            "width": 2560,
-            "height": 1356
+            "width": 1920,
+            "height": 996
         },
         {
             "name": "Window normal",
             "type": "pixel_colour",
-            "x": 3,
-            "y": 1353,
+            "x": 32,
+            "y": 966,
             "colour": "#555555"
         },
         {
             "name": "File menu",
             "type": "pixel_colour",
-            "x": 2,
-            "y": 2,
+            "x": 5,
+            "y": 5,
             "colour": "#ebe9ed"
         },
         {
             "name": "Edit menu",
             "type": "pixel_colour",
             "x": 34,
-            "y": 2,
+            "y": 5,
             "colour": "#ebe9ed"
         },
         {
             "name": "Selection menu",
             "type": "pixel_colour",
             "x": 62,
-            "y": 2,
+            "y": 5,
             "colour": "#ebe9ed"
         },
         {
             "name": "Document menu",
             "type": "pixel_colour",
             "x": 103,
-            "y": 2,
+            "y": 5,
             "colour": "#ebe9ed"
         },
         {
             "name": "Tiles menu",
             "type": "pixel_colour",
             "x": 154,
-            "y": 2,
+            "y": 5,
             "colour": "#ebe9ed"
         },
         {
             "name": "Color menu",
             "type": "pixel_colour",
             "x": 180,
-            "y": 2,
+            "y": 5,
             "colour": "#ebe9ed"
         },
         {
             "name": "View menu",
             "type": "pixel_colour",
             "x": 211,
-            "y": 2,
+            "y": 5,
             "colour": "#ebe9ed"
         },
         {
             "name": "Extras menu",
             "type": "pixel_colour",
             "x": 240,
-            "y": 2,
+            "y": 5,
             "colour": "#ebe9ed"
         },
         {
             "name": "Help menu",
             "type": "pixel_colour",
             "x": 273,
-            "y": 2,
+            "y": 5,
             "colour": "#ebe9ed"
-        },
-        {
-            "name": "Program switcher",
-            "type": "pixel_not_colour",
-            "x": 1294,
-            "y": 612,
-            "colour": "#ffffff"
         }
     ]
 }
