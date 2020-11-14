@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+import os
 import argparse
 from PIL import Image, ImageColor
 from pathlib import Path
@@ -24,8 +25,8 @@ def _parse_arguments():
     return args
 
 
-def _verify_source(destination):
-    p = Path(destination)
+def _verify_source(source):
+    p = Path(source)
     if not p.exists():
         raise FileNotFoundError()
     else:
@@ -33,7 +34,7 @@ def _verify_source(destination):
             raise NotADirectoryError()
 
 
-def _verify_destination(destination, source):
+def _verify_destination(destination):
     p = Path(destination)
     if not p.exists():
         p.mkdir()
@@ -108,6 +109,18 @@ def _process_source(source, destination, delete_immediately, specifications):
     return processed, rejected
 
 
+def _get_spec_path(spec):
+    spec_path = Path(spec)
+    if spec_path.exists():
+        return spec_path
+    try:
+        xdg_config = Path(os.environ['XDG_CONFIG_HOME'])
+    except KeyError:
+        xdg_config = Path('~/.config').expanduser()
+    spec_path = xdg_config / 'detectbadframes' / 'specs' / '{}.json'.format(spec)
+    return spec_path
+
+
 def _main():
     args = _parse_arguments()
     global _debug, _test
@@ -126,7 +139,7 @@ def _main():
 
         try:
             if not args.delete_immediately:
-                _verify_destination(args.destination, args.source)
+                _verify_destination(args.destination)
         except NotADirectoryError:
             print ("The specified destination is not a directory.")
             sys.exit(1)
@@ -139,7 +152,8 @@ def _main():
 
         try:
             for spec in args.specification:
-                with Path(spec).open() as spec_file:
+                spec_path = _get_spec_path(spec)
+                with spec_path.open() as spec_file:
                     parsed_specifications.append(json.load(spec_file))
         except FileNotFoundError as e:
             print ("The specification file does not exist (%s)." % e.filename)
