@@ -18,6 +18,7 @@ def _parse_arguments():
     parser.add_argument("source", type=str, action="store", help="source directory for image sequences")
     parser.add_argument("--destination", dest="destination", metavar='D', type=str, action="store", default="rejected", help="destination directory for bad frames")
     parser.add_argument("--delete", action="store_true", dest="delete_immediately", help="delete detected frames immediately instead of moving them to a rejection directory")
+    parser.add_argument("--check-children", action="store_true", dest="check_children", help="check child directories for frames instead of just the specified source directory")
     parser.add_argument("-d", "--debug", action="store_true", dest="debug", help="print debugging information")
     parser.add_argument("--test", action="store_true", dest="test", help="check the rules but do not move or delete the frames")
 
@@ -99,13 +100,54 @@ def _process_frame(frame_path, destination, delete_immediately, specifications):
     return passed
 
 
-def _process_source(source, destination, delete_immediately, specifications):
+def _process_ultimate_source(
+    source,
+    destination,
+    delete_immediately,
+    specifications,
+    rejected,
+    processed
+):
+    for frame in Path(source).iterdir():
+        if frame.is_file():
+            processed += 1
+            if not _process_frame(frame, destination, delete_immediately, specifications):
+                rejected.append(frame)
+    return processed, rejected
+
+
+def _process_source(
+    source,
+    check_children,
+    destination,
+    delete_immediately,
+    specifications
+):
     rejected = []
     processed = 0
-    for frame in Path(source).iterdir():
-        processed += 1
-        if not _process_frame(frame, destination, delete_immediately, specifications):
-            rejected.append(frame)
+    processed, rejected = _process_ultimate_source(
+        source,
+        destination,
+        delete_immediately,
+        specifications,
+        rejected,
+        processed
+    )
+    if check_children:
+        for child in Path(source).iterdir():
+            if child.is_dir():
+                child_destination = Path(destination) / child.name
+                if not delete_immediately:
+                    child_destination.mkdir(exist_ok=True)
+                processed, rejected = _process_ultimate_source(
+                    child,
+                    child_destination,
+                    delete_immediately,
+                    specifications,
+                    rejected,
+                    processed
+                )
+
     return processed, rejected
 
 
@@ -166,7 +208,7 @@ def _main():
             for spec in parsed_specifications:
                 print(spec)
 
-        processed, rejected = _process_source(args.source, args.destination, args.delete_immediately, parsed_specifications)
+        processed, rejected = _process_source(args.source, args.check_children, args.destination, args.delete_immediately, parsed_specifications)
 
         print("%d frame(s) rejected of %d processed" % (len(rejected), processed))
         if _test:
