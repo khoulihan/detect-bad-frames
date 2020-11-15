@@ -24,6 +24,12 @@ If multiple applications were expected to be captured by the timelapse, multiple
 detectbadframes.py specs/pyxel_edit.json specs/godot.json timelapse/01
 ```
 
+Specification files can also be specified by name if they are included in the script's config directory (`~/.config/detectbadframes/specs` by default). The file extension is not required in this case.
+
+```
+detectbadframes.py pyxel_edit timelapse/01
+```
+
 ### Destination
 
 By default, any bad frames detected will be moved to a directory called "rejected" in the current working directory.
@@ -41,6 +47,10 @@ To delete frames immediately instead of moving them, add the `--delete` flag. Th
 ```
 detectbadframes.py --delete specs/pyxel_edit.json timelapse/01
 ```
+
+### Check Children
+
+If the timelapse is structured as several sequences in subdirectories, the `--check-children` flag can be used to check all of them at once, specifying the parent directory as the source. The rejected frames will be placed in subdirectories of the destination with the same names.
 
 ### Test
 
