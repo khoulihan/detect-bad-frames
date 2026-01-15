@@ -6,6 +6,8 @@ Copyright (c) 2020 by Kevin Houlihan
 
 License: MIT, see LICENSE for more details.
 
+**This repository has been [migrated to Codeberg](https://codeberg.org/hyh/detect-bad-frames).**
+
 ## Prerequisites
 
 The script depends on Python 3.6 (though possibly earlier versions of Python 3 will work fine), and [Pillow](https://python-pillow.org/).
